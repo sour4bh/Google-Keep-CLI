@@ -2,7 +2,6 @@ import gkeepapi
 import keyring
 
 
-
 # Valid Note Colors
 noteColor = {
     'White' : gkeepapi.node.ColorValue.White,
@@ -58,10 +57,10 @@ def listLabels():
         print(e.raw)
 
 def findNote(queryStr='', labels=[], pinned=False):
-    if len(labels):
-        labels = [keep.findLabel(lablel) for label in labels]
     try:
-        matches = keep.find(query=queryStr, labels=[keep.findLabel(labels)])
+        if len(labels):
+            labels = [keep.findLabel(lablel) for label in labels]
+            matches = keep.find(query=queryStr, labels=[keep.findLabel(labels)])
         if pinned:
             matches = keep.find(query=queryStr, labels=[keep.findLabel(labels)]], pinned=True)
         print('Found', len(matches), 'matching notes:')
