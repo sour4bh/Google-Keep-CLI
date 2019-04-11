@@ -3,18 +3,18 @@ import keyring
 
 
 # Valid Note Colors
-noteColor = {
-    'White' : gkeepapi.node.ColorValue.White,
-    'Red' : gkeepapi.node.ColorValue.Red,
-    'Orange' : gkeepapi.node.ColorValue.Orange,
-    'Yellow' : gkeepapi.node.ColorValue.Yellow,
-    'Green' : gkeepapi.node.ColorValue.Green,
-    'Teal' : gkeepapi.node.ColorValue.Teal,
-    'Blue' : gkeepapi.node.ColorValue.Blue,
-    'Purple' : gkeepapi.node.ColorValue.Purple,
-    'Pink' : gkeepapi.node.ColorValue.Pink,
-    'Brown' : gkeepapi.node.ColorValue.Brown,
-    'Gray' : gkeepapi.node.ColorValue.Gray
+noteColors = {
+    'white' : gkeepapi.node.ColorValue.White,
+    'red' : gkeepapi.node.ColorValue.Red,
+    'orange' : gkeepapi.node.ColorValue.Orange,
+    'yellow' : gkeepapi.node.ColorValue.Yellow,
+    'green' : gkeepapi.node.ColorValue.Green,
+    'teal' : gkeepapi.node.ColorValue.Teal,
+    'blue' : gkeepapi.node.ColorValue.Blue,
+    'purple' : gkeepapi.node.ColorValue.Purple,
+    'pink' : gkeepapi.node.ColorValue.Pink,
+    'brown' : gkeepapi.node.ColorValue.Brown,
+    'gray' : gkeepapi.node.ColorValue.Gray
 }
 
 keep = gkeepapi.Keep()
@@ -31,7 +31,7 @@ keep.resume(username, master_token)
 
 
 def postNote(title, text, labels=[], pin=False, color=None):
-    try:
+    try:    
         note = keep.createNote(title, text)
         if len(labels) != 0:
             for label in labels:
@@ -41,10 +41,11 @@ def postNote(title, text, labels=[], pin=False, color=None):
             
         # if color not None:
         #     try:
-        #         note.color = noteColor[color]
-        #     except:
+        #         note.color = noteColors[color]
+        #     except KeyError:
+        # ## note: exception caught during cli arg parse ## 
         #         print('Invalid Color. \nFollowing is the list of valid colors:\n')
-        #         for color in noteColor:
+        #         for color in noteColors:
         #             print(color)
         
         keep.sync()
