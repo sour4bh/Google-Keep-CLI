@@ -17,8 +17,8 @@ noteColor = {
     'Gray' : gkeepapi.node.ColorValue.Gray
 }
 
-
 keep = gkeepapi.Keep()
+username, master_token = '', ''
 token = keyring.get_password('google-keep-token', username)
 keep.resume(username, master_token)
 
@@ -35,15 +35,18 @@ def postNote(title, text, labels=[], pin=False, color=None):
         note = keep.createNote(title, text)
         if len(labels) != 0:
             for label in labels:
-            note.labels.add(label)
-        if pin: note.pinned = True
-        if color not None:
-            try:
-                note.color = noteColor[color]
-            except:
-                print('Invalid Color. \nFollowing is the list of valid colors:\n')
-                for color in noteColor:
-                    print(color)
+                note.labels.add(label)
+        if pin == True:
+            note.pinned = True
+            
+        # if color not None:
+        #     try:
+        #         note.color = noteColor[color]
+        #     except:
+        #         print('Invalid Color. \nFollowing is the list of valid colors:\n')
+        #         for color in noteColor:
+        #             print(color)
+        
         keep.sync()
     except gkeepapi.exception.ParseException as e:
         print(e.raw)
@@ -59,10 +62,10 @@ def listLabels():
 def findNote(queryStr='', labels=[], pinned=False):
     try:
         if len(labels):
-            labels = [keep.findLabel(lablel) for label in labels]
+            labels = [keep.findLabel(label) for label in labels]
             matches = keep.find(query=queryStr, labels=[keep.findLabel(labels)])
-        if pinned:
-            matches = keep.find(query=queryStr, labels=[keep.findLabel(labels)]], pinned=True)
+        if pinned == True:
+            matches = keep.find(query=queryStr, labels=[keep.findLabel(labels)], pinned=True)
         print('Found', len(matches), 'matching notes:')
         return matches
     except gkeepapi.exception.ParseException as e:
