@@ -25,5 +25,3 @@ elif args.command == 'labels':
     # list labels; note arg nargs = ?;
     # procced using empty string for note arg
     keep.listLabels()
-
-
