@@ -31,34 +31,17 @@ keep.resume(username, master_token)
 
 
 def postNote(title, text, labels=[], pin=False, color=None):
-    try:    
+    try:
         note = keep.createNote(title, text)
         if len(labels) != 0:
             for label in labels:
                 note.labels.add(label)
         if pin == True:
             note.pinned = True
-            
-        # if color not None:
-        #     try:
-        #         note.color = noteColors[color]
-        #     except KeyError:
-        # ## note: exception caught during cli arg parse ## 
-        #         print('Invalid Color. \nFollowing is the list of valid colors:\n')
-        #         for color in noteColors:
-        #             print(color)
-        
         keep.sync()
     except gkeepapi.exception.ParseException as e:
         print(e.raw)
 
-def listLabels():
-    try:
-        print('labels:')
-        for label in keep.labels():
-            print(label)
-    except gkeepapi.exception.ParseException as e:
-        print(e.raw)
 
 def findNote(queryStr='', labels=[], pinned=False):
     try:
@@ -69,5 +52,13 @@ def findNote(queryStr='', labels=[], pinned=False):
             matches = keep.find(query=queryStr, labels=[keep.findLabel(labels)], pinned=True)
         print('Found', len(matches), 'matching notes:')
         return matches
+    except gkeepapi.exception.ParseException as e:
+        print(e.raw)
+
+def listLabels():
+    try:
+        print('labels:')
+        for label in keep.labels():
+            print(label)
     except gkeepapi.exception.ParseException as e:
         print(e.raw)
