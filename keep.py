@@ -1,6 +1,6 @@
 import gkeepapi
 import keyring
-
+import grabtoken
 
 # Valid Note Colors
 noteColors = {
@@ -19,15 +19,19 @@ noteColors = {
 
 keep = gkeepapi.Keep()
 username, master_token = '', ''
-token = keyring.get_password('google-keep-token', username)
-keep.resume(username, master_token)
+master_token = keyring.get_password('google-keep-token', username)
+if master_token != None:
+    keep.resume(username, master_token)
+else:
+    # return authenticated keep object and save session token
+    keep = grabtoken.login_grabtoken()
+
 
 # Error reporting
 # try:
 #     # Code that raises the exception
 # except gkeepapi.exception.ParseException as e:
 #     print(e.raw)
-
 
 
 def postNote(title, text, labels=[], pin=False, color=None):

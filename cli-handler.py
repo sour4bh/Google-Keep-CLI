@@ -1,11 +1,12 @@
 # # !/usr/bin/env python3
-import grabtoken
-import exceptions
-import keep 
+# import grabtoken
+# import exceptions
+import keep
 
 import argparse
 
-# seperate usage cases for put, fetch, 
+# seperate usage cases for put, fetch, labels
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('command', choices=['put', 'fetch', 'labels'], help='Action to perform')
