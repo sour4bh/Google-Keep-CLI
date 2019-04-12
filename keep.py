@@ -17,8 +17,10 @@ noteColors = {
     'gray' : gkeepapi.node.ColorValue.Gray
 }
 
+
 keep = gkeepapi.Keep()
-username, master_token = '', ''
+with open('username.cred', 'r') as user_cred:
+    username = user_cred.read()
 master_token = keyring.get_password('google-keep-token', username)
 if master_token != None:
     keep.resume(username, master_token)

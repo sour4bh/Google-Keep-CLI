@@ -17,9 +17,8 @@ def login_grabtoken():
         # save session token
         token = keep.getMasterToken()
         # save username
-        user_file = open('username.cred', 'w')
-        user_file.write(username)
-        user_file.close()
+        with open('username.cred', 'w') as user_cred:
+            user_cred.write(username)
         # save master token using keyring
         keyring.set_password('google-keep-token', username, token)
         return keep 
